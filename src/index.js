@@ -6,6 +6,23 @@ const tableId = "dog-breeds"
 document.addEventListener("DOMContentLoaded", () => {
     showImage()
     showBreeds()
+
+
+    let dropdown = document.getElementById("breed-dropdown")
+
+    dropdown.addEventListener("change", () => {
+        showBreeds()
+        debugger
+        let letter = dropdown.value
+        let nodeList = document.querySelectorAll('li')
+        debugger
+        getFilteredList(nodeList, letter)
+        //getAllLis(nodeList)
+        // filter(x => x.innerText[0] === letter)
+
+
+        
+    })
 })
 
 
@@ -28,9 +45,31 @@ function showBreeds() {
 
 function putBreedsInTable (breedArray) {
     for (const key in breedArray.message) {
-    let listItem = document.createElement('li') 
+    let listItem = document.createElement('li')
+    listItem.addEventListener("click", changeColor)
+
+
     listItem.innerText = key
     let list = document.querySelector(`#${tableId}`)
     list.append(listItem)
     }
 }
+
+function changeColor(event) {
+    event.target.style.color = "red"
+}
+
+function getAllLis(array) {
+    let arr = []
+    array.forEach(list => arr.push(list.innerText))
+    return arr;
+}
+
+function getFilteredList(nodes, letter) {
+    nodes.forEach(li => {
+        if (li.innerText[0] !== letter) {
+            li.remove()
+        }
+    })
+}
+
